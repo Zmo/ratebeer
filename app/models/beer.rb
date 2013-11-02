@@ -1,6 +1,6 @@
 class Beer < ActiveRecord::Base
   belongs_to :brewery
-  has_many :ratings
+  has_many :ratings, :dependent => :destroy
 
   def average_rating
     ratings.inject(0) { |result, element| result + element.score } / ratings.size
@@ -10,5 +10,9 @@ class Beer < ActiveRecord::Base
     #end
     #sum = sum / ratings.size
     #return sum
+  end
+
+  def to_s
+    beer.name + " " + brewery.name
   end
 end

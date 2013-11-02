@@ -1,4 +1,5 @@
 class BreweriesController < ApplicationController
+  before_filter :authenticate, :only => [:new, :create, :destroy]
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
 
   # GET /breweries
@@ -70,5 +71,15 @@ class BreweriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def brewery_params
       params.require(:brewery).permit(:name, :year)
+    end
+
+    private
+
+    def authenticate
+      admin_accounts = { "admin" => "secret", "pekka" => "beer", "arto" => "foobar", "matti" => "ittam"}
+
+      authenticate_or_request_with_http_basic do |username, password|
+        admin_accounts.has_key?(username) and admin_accounts.fetch(username) == password
+      end
     end
 end
