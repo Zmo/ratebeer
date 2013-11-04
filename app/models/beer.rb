@@ -13,6 +13,6 @@ class Beer < ActiveRecord::Base
   end
 
   def to_s
-    beer.name + " " + brewery.name
+    name + " - " + brewery.name
   end
 end
