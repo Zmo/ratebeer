@@ -5,20 +5,25 @@
 </p>
 
 <p>
-  <strong>Year:</strong>
-  <%= @brewery.year %>
+Established at <%= @brewery.year %>
+  
 </p>
 
 <p>
-  <strong>Oluiden määrä:</strong>
+  <strong>Number of beers:</strong>
   <%= @brewery.beers.count %>
 </p>
 
-<p>
+<ul>
   <% @brewery.beers.each do |beer| %>
-    <%= link_to beer.name %>
+    <li> <%= link_to beer.name, beer %> </li>
   <% end %>
-</p>
+</ul>
 
-<%= link_to 'Edit', edit_brewery_path(@brewery) %> |
-<%= link_to 'Back', breweries_path %>
+<% if @brewery.ratings.empty? %>
+  The beers of this brewery don't have any ratings yet.</br>
+<% else %>
+  The beers of this brewery have <%= pluralize(@brewery.ratings.size, "rating") %>, average <%= @brewery.average_rating(@brewery.ratings) %>. </br>
+<% end %>
+
+<%= link_to 'Edit', edit_brewery_path(@brewery) %>

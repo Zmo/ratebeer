@@ -16,10 +16,12 @@
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    Style: <%= f.select :style, options_for_select(@styles) %>
+    <%= f.label :style %><br/>
+    <%= f.select :style, options_for_select(@styles) %>
   </div>
   <div class="field">
-    Brewery: <%= f.select :brewery_id, options_from_collection_for_select(@breweries, :id, :name) %>
+    <%= f.label :brewery %><br/>
+    <%= f.select :brewery_id, options_from_collection_for_select(@breweries, :id, :name) %>
   </div>
   <div class="actions">
     <%= f.submit %>
