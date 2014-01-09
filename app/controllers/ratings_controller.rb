@@ -1,4 +1,5 @@
 class RatingsController < ApplicationController
+  before_filter :ensure_that_signed_in, :except => [:index]
 
   def index
     @ratings = Rating.all
@@ -10,7 +11,7 @@ class RatingsController < ApplicationController
   end
 
   def create
-    @rating = Rating.new params[:rating]
+    @rating = Rating.new rating_params
 
     if @rating.save
       current_user.ratings << @rating

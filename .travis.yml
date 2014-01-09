@@ -1,0 +1,14 @@
+language: ruby
+rvm: 1.9.3
+script:
+- bundle exec rake db:migrate --trace
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+- bundle exec rspec -f d spec/
+deploy:
+  provider: heroku
+  api_key:
+    secure: LW2Cl164q6vke9B66OqkYF0348xvr8MWvJjdej2nt6+I6HEmDd6FgmAto6XHNwn9/EQCTFWYZrNCnI0dnJy8QFgdp4Pn9F7HIGxS+895Olra/vPkTgtxXvUzRR5+KfVy31sTms7kxxX0cuPU14pAKISnERNOlRPrBtPIbm1OZUo=
+  app: quiet-shore-1308
+  on:
+    repo: Zmo/ratebeer

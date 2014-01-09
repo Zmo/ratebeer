@@ -19,6 +19,28 @@ class User < ActiveRecord::Base
     ratings.sort_by{ |r| r.score }.last.beer
   end
 
+  def favorite_style
+    return nil if ratings.empty?
+    styles = ratings.map { |r| r.beer.style }.uniq
+    styles.max_by do |style|
+      ratingstyles = ratings.find_all { |r| r.beer.style == style }
+      num = ratingstyles.count
+      sum = ratingstyles.reduce(0) { |acc, r| acc + r.score }
+      sum/num
+    end
+  end
+
+  def favorite_brewery
+    return nil if ratings.empty?
+    brewerys = ratings.map { |r| r.beer.brewery.name }.uniq
+    brewerys.max_by do |brewery|
+      ratingstyles = ratings.find_all { |r| r.beer.brewery.name == brewery }
+      num = ratingstyles.count
+      sum = ratingstyles.reduce(0) { |acc, r| acc + r.score }
+      sum/num
+    end
+  end
+
   has_many :ratings
   has_many :beers, :through => :ratings
   has_many :memberships

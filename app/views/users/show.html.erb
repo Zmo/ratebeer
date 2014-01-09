@@ -15,6 +15,21 @@
   <% end %>
 </ul>
 
+<p>
+<% if @user.ratings.size > 0 %>
+  Favorite style is <%= @user.favorite_style %>
+<% else %>
+  No favorite style (you need to rate a beer to have one).
+<% end %>
+</p>
+
+<p>
+<% if @user.ratings.size > 0 %>
+  Favorite brewery is <%= @user.favorite_brewery %>
+<% else %>
+  No favorite brewery (you need to rate a beer to have one).
+<% end %>
+
 <p>Is a member of <%= pluralize(@user.beer_clubs.size, "beer club") %> </p>
 
 <ul>
