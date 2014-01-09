@@ -48,8 +48,6 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem 'debugger', :group => :development
-
 gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Use ActiveModel has_secure_password
