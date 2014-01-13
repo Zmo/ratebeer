@@ -5,8 +5,8 @@ class Brewery < ActiveRecord::Base
   validates :year, numericality: { only_integer: true, greater_than: 1042 }
   validate :year_is_not_in_the_future
 
-  scope :active, where(:active => [true, 1])
-  scope :retired, where(:active => [false, nil, 0])
+  scope :active, where(:active => [true])
+  scope :retired, where(:active => [false, nil])
 
   def year_is_not_in_the_future
     if Time.now.year < year
