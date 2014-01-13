@@ -82,17 +82,20 @@ describe User do
     end
 
     it "is the only rated if only one rating" do
-      create_beer_with_rating_and_style 25, user, "Lager"
+      style = FactoryGirl.create(:style, :name => "Lager", :description => "")
+      create_beer_with_rating_and_style 25, user, style
 
-      expect(user.favorite_style).to eq("Lager")
+      expect(user.favorite_style).to eq(style)
     end
 
     it "is the one with the highest average rating if several beers rated" do
-      create_beer_with_rating_and_style 10, user, "Lager"
-      create_beer_with_rating_and_style 15, user, "Porter"
-      create_beer_with_rating_and_style 16, user, "Lager"
+      style1 = FactoryGirl.create(:style, :name => "Lager", :description => "")
+      style2 = FactoryGirl.create(:style, :name => "Porter", :description => "")
+      create_beer_with_rating_and_style 10, user, style1
+      create_beer_with_rating_and_style 15, user, style2
+      create_beer_with_rating_and_style 16, user, style1
 
-      expect(user.favorite_style).to eq("Porter")
+      expect(user.favorite_style).to eq(style2)
     end
   end
 

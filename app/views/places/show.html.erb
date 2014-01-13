@@ -1,0 +1,10 @@
+<h1><%= @place.name %></h1>
+
+<p><%= @place.street %>, <%= @place.zip %> <%= @place.city %></p>
+
+<iframe src="<%= @place.blogmap %>" width='400' height='400'></iframe>
+
+<p>
+<%= @scores.each{ |key, value| puts "#{key}: #{value}" } %>
+</p>
+Kaikkea yritetty, ei suostu iteroimaan tuota hashia...

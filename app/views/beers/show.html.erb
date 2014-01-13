@@ -1,13 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @beer.name %>
-</p>
+<h1><%= @beer.name %></h1>
 
 <p>
   <strong>Style:</strong>
-  <%= @beer.style %>
+  <%= @beer.style.name %>
 </p>
 
 <p>
@@ -22,5 +19,13 @@
 <% end %>
 <br/>
 
-<%= link_to 'Edit', edit_beer_path(@beer) %> |
-<%= link_to 'Back', beers_path %>
+<h4>give a rating:</h4>
+
+<%= form_for(@rating) do |f| %>
+  <%= f.hidden_field :beer_id %>
+  score: <%= f.number_field :score %>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to 'Edit', edit_beer_path(@beer), :class => 'btn btn-primary' %>
+<%= link_to 'Destroy', @beer, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-danger' if current_user %>

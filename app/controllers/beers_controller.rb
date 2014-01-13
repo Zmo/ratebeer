@@ -1,23 +1,36 @@
 class BeersController < ApplicationController
-  before_filter :ensure_that_signed_in, :except => [:index, :show]
+  before_filter :ensure_that_signed_in, :except => [:index, :show, :list]
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
 
   # GET /beers
   # GET /beers.json
   def index
-    @beers = Beer.all
+    @beers = Beer.all.sort_by{ |b| b.send(params[:order] || 'name') }
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @beers, :methods => [ :brewery, :style ] }
+    end
   end
 
   # GET /beers/1
   # GET /beers/1.json
   def show
+    @beer = Beer.find(params[:id])
+    @rating = Rating.new
+    @rating.beer = @beer
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @beer }
+    end
   end
 
   # GET /beers/new
   def new
     @beer = Beer.new
     @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+    @styles = Style.all
   end
 
   # GET /beers/1/edit
@@ -33,7 +46,7 @@ class BeersController < ApplicationController
       redirect_to beers_path
     else
       @breweries = Brewery.all
-      @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+      @styles = Style.all
       render :new
     end
   end
@@ -62,6 +75,9 @@ class BeersController < ApplicationController
     end
   end
 
+  def list
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_beer
@@ -70,6 +86,6 @@ class BeersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def beer_params
-      params.require(:beer).permit(:name, :style, :brewery_id)
+      params.require(:beer).permit(:name, :brewery_id, :style_id)
     end
 end

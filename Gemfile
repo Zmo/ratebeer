@@ -26,11 +26,22 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'rb-readline', '~> 0.4.2'
 
+gem 'httparty'
+
+gem 'rails-settings-cached', '0.3.1'
+
+gem 'therubyracer'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
+
 group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'launchy'
   gem 'simplecov', :require => false
+  gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner', '< 1.1.0'
 end
 
 group :development, :test do

@@ -5,6 +5,7 @@ describe "User" do
 
   before :each do
     FactoryGirl.create :brewery, :name => "Koff"
+    FactoryGirl.create :style, :name => "Weizen"
     FactoryGirl.create :user
   end
 
@@ -42,7 +43,7 @@ describe "User" do
       visit beers_path
       click_link "New Beer"
       fill_in('Name', :with => 'testbeer')
-      select('Weizen', :from => 'Style')
+      select('Weizen', :from => 'beer[style_id]')
       select('Koff', :from => 'beer[brewery_id]')
       expect{
         click_button "Create Beer"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140108124317) do
+ActiveRecord::Schema.define(version: 20140112131927) do
 
   create_table "beer_clubs", force: true do |t|
     t.string   "name"
@@ -23,18 +23,14 @@ ActiveRecord::Schema.define(version: 20140108124317) do
 
   create_table "beers", force: true do |t|
     t.string   "name"
-    t.string   "style"
     t.integer  "brewery_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "style_id"
   end
 
-  create_table "breweries", force: true do |t|
-    t.string   "name"
-    t.integer  "year"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+# Could not dump table "breweries" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "memberships", force: true do |t|
     t.integer  "beer_club_id"
@@ -49,6 +45,24 @@ ActiveRecord::Schema.define(version: 20140108124317) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+  end
+
+  create_table "settings", force: true do |t|
+    t.string   "var",                   null: false
+    t.text     "value"
+    t.integer  "thing_id"
+    t.string   "thing_type", limit: 30
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
+
+  create_table "styles", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

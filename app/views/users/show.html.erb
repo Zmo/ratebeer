@@ -17,7 +17,7 @@
 
 <p>
 <% if @user.ratings.size > 0 %>
-  Favorite style is <%= @user.favorite_style %>
+  Favorite style is <%= @user.favorite_style.name %>
 <% else %>
   No favorite style (you need to rate a beer to have one).
 <% end %>
@@ -34,12 +34,11 @@
 
 <ul>
   <% @user.beer_clubs.each do |beer_club| %>
-    <li> <%= link_to beer_club.name, beer_club_path %> </li>
+    <li> <%= link_to beer_club.name, beer_club %> </li>
   <% end %>
 </ul>
 
 <% if currently_signed_in? @user %>
-  <%= link_to 'Delete', user_path(@user), method: :delete, :data => { :confirm => 'Are you sure?' } %> |
-  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Edit', edit_user_path(@user), :class => 'btn btn-primary' %>
+  <%= link_to 'Delete', user_path(@user), method: :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger' %>
 <% end %>
-<%= link_to 'Back', users_path %>
